@@ -22,8 +22,13 @@ class MainActivity : AppCompatActivity() {
         setupRecyclerView()
         observeViewModel()
 
-        // Remplacer-le par votre clé API
-        viewModel.fetchNews("YOUR_API_KEY")
+        // The variable name matches what you put in local.properties
+        val apiKey = BuildConfig.NEWS_API_KEY
+        viewModel.fetchNews(apiKey)
+
+        // To add an API Key, first create one at https://newsapi.org/
+        // Then add the API key to local.properties in the root directory
+        // example: NEWS_API_KEY=abcd12345myapikey
     }
 
     private fun setupRecyclerView() {
