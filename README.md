@@ -22,7 +22,6 @@ This project requires an API Key to function. **The app will not compile or fetc
 ### Step 2: Configure Android Studio
 1.  Clone or download this project and open it in **Android Studio**.
 2.  In the project files view (left sidebar), look for the file named **`local.properties`** in the root folder.
-    * *Note: If you don't see it, switch the view from "Android" to "Project" at the top of the sidebar.*
 3.  Open `local.properties` and add the following line at the bottom:
 
 ```properties
@@ -38,28 +37,32 @@ NEWS_API_KEY=abc123456789xyz
 
 ```
 
-###Step 3: Sync and Build1. Click the **"Sync Project with Gradle Files"** button (Elephant icon) in the top right.
+### Step 3: Sync and Build
+1. Click the **"Sync Project with Gradle Files"** button (Elephant icon) in the top right.
 2. **Build the project** (Build > Make Project) or simply **Run** the app on an emulator.
-* *Note: You must build the project at least once for the code to recognize `BuildConfig.NEWS_API_KEY`.*
 
-
+*Note: You must build the project at least once for the code to recognize `BuildConfig.NEWS_API_KEY`.*
 
 ---
 
-##🧐 How It Works (Under the Hood)###1. API Key SecurityInstead of hardcoding the key like this: `val apiKey = "12345"`, we use the **Secrets Gradle Plugin**.
+## 🧐 How It Works (Under the Hood)
+
+### 1. API Key Security
+Instead of hardcoding the key like this: `val apiKey = "12345"`, we use the **Secrets Gradle Plugin**.
 
 * The plugin reads `NEWS_API_KEY` from your `local.properties` file.
 * At build time, it generates a Java class called `BuildConfig`.
 * We access the key in Kotlin safely:
+
 ```kotlin
 val apiKey = BuildConfig.NEWS_API_KEY
 
 ```
 
-
 * Since `local.properties` is listed in `.gitignore`, your key never gets pushed to GitHub!
 
-###2. Networking (Retrofit)The app uses **Retrofit** to communicate with the News API.
+### 2. Networking (Retrofit)
+The app uses **Retrofit** to communicate with the News API.
 
 * **Service Interface:** Defines the HTTP endpoints (e.g., `@GET("top-headlines")`).
 * **ViewModel:** Launches a Coroutine to fetch data off the main thread to prevent the UI from freezing.
@@ -67,13 +70,16 @@ val apiKey = BuildConfig.NEWS_API_KEY
 
 ---
 
-##🛠 Tech Stack* **Language:** Kotlin
+## 🛠 Tech Stack
+* **Language:** Kotlin
 * **HTTP Client:** Retrofit + OkHttp + Gson Converter
 * **Image Loading:** Coil
 * **Concurrency:** Kotlin Coroutines
 * **Architecture:** MVVM (Model-View-ViewModel)
 
-##🐛 Troubleshooting**"Unresolved reference: BuildConfig"**
+## 🐛 Troubleshooting
+
+**"Unresolved reference: BuildConfig"**
 
 * This happens if the project hasn't been built yet. Go to **Build > Make Project** to force the generation of the `BuildConfig` file.
 
@@ -99,4 +105,3 @@ NEWS_API_KEY=DEFAULT_KEY
 
 ```
 
-This ensures the project compiles immediately after cloning, allowing them to read the code before they even set up their own key.
